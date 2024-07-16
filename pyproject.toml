@@ -1,0 +1,58 @@
+[tool.poetry]
+name = "poetry-9-1"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "poetry_9"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[tool.poetry.group.lint.dependencies]
+isort = "^5.13.2"
+flake8 = "^7.1.0"
+mypy = "^1.10.0"
+black = "^24.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[toml.mypy]
+disallow_untyped_defs=true
+warn_return_any=true
+ignore_missing_imports = true
+disallow_untyped_calls = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+show_error_codes = true
+strict_optional = true
+#disallow_untyped_defs = false
+
+[tool.flake8]
+#max-line-length = 88
+extend-ignore = [
+    "E203",  # Whitespace before ':'
+    "W503",  # Line break occurred before a binary operator
+]
+exclude = [
+
+    "venv",
+]
+
+[tool.black]
+#line-length = 88
+target-version = ['py38']
+skip-string-normalization = true
+
+[tool.isort]
+profile = "black"
+#line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+combine_as_imports = true
+
+
