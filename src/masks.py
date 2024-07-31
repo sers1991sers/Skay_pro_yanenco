@@ -51,15 +51,15 @@ def mask_account_card(check: str) -> str:
     name_account = ("Счёт")
     name_cart = ("Visa", "MasterCard", "Maestro", "Visa Gold")
     for cart_sort in cart:
-        ren = ""
+        temporary_file = ""
 
         if cart_sort.startswith(name_cart):
             visa_cart.append(cart_sort)
             if visa_cart:
                 for i in visa_cart:
                     num = i[-16:]
-                    ren += f"{i[:-16]} {num[:4]} {num[4:6]}** **** {num[-4:]} "
-                    result.append(ren)
+                    temporary_file += f"{i[:-16]} {num[:4]} {num[4:6]}** **** {num[-4:]} "
+                    result.append(temporary_file)
 
             if len(cart_sort) == 16 or name_account:
                 get_mask_card_number(cart_sort)
