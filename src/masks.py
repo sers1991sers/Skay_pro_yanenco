@@ -1,5 +1,6 @@
+from typing import Any
+
 cart = [
-    "6831982476737658",
     "Maestro 1596837868705199",
     "Счет 64686473678894779589",
     "MasterCard 7158300734726758",
@@ -15,47 +16,57 @@ cart = [
 def get_mask_card_number(card_number: str) -> str:
     """Маскировки номера карты"""
 
-    if len(card_number) != 16:
-        return "Не верный формат ввода."
+    if card_number.isalpha():
+        name = card_number[:4]
+        print(name)
 
-    masked_number = f"{card_number[:4]} {card_number[4:6]}** **** {card_number[-4:]}"
-    return masked_number
+    else:
+        masked_number = f"{card_number[:4]} {card_number[4:6]}** **** {card_number[-4:]}"
+        return masked_number
 
-#перенести в модуль waidget.py
+
+# перенести в модуль waidget.py
 def get_mask_account(number_account: str) -> str:
     """Маскировки номера счета"""
     for number in number_account:
-        if number.isdigit():
-            cel_number = f"{'*' * len(number_account[:2]) + number_account[2:]}"
-            return cel_number
+        if number.isdigit():  #'*' * len(number_account[:-4])
+            cel_number = f"{number_account[:-4]}{"*" * len(number_account[-4:])}"
         else:
             return "Не верный формат ввода"
+    return cel_number
 
 
 # исправить принемает только один аргумент строку, содержащию тип и номер карты или счёта
 # accaunt=None, check=None
+result: list[Any] = []
+
+
 def mask_account_card(check: str) -> str:
-    """Маскировки номера счета"""
-    account_list = []
-    account_list_not_name = []
+    """сортировка  номеров карт, ссылается -> wiadget -> mask_account_cards()"""
 
-    if check:
-        for i in check:
-            masked = i[:5] + "**" + (i[8:])
-            account_list.append(masked)
+    visa_cart = []
+    name_account = ("Счёт")
+    name_cart = ("Visa", "MasterCard", "Maestro", "Visa Gold")
+    for cart_sort in cart:
+        ren = ""
 
-    # if accaunt:
-    #     for accoun in accaunt:
-    #         masked = "**" + accoun[2:]
-    #         account_list_not_name.append(masked)
-    # account_list.extend(account_list_not_name)
-    # return f"{account_list}"
+        if cart_sort.startswith(name_cart):
+            visa_cart.append(cart_sort)
+            if visa_cart:
+                for i in visa_cart:
+                    num = i[-16:]
+                    ren += f"{i[:-16]} {num[:4]} {num[4:6]}** **** {num[-4:]} "
+                    result.append(ren)
+
+            if len(cart_sort) == 16 or name_account:
+                get_mask_card_number(cart_sort)
+
+    return result
 
 
-number_account = "19899891283123"
-print(get_mask_account(number_account))
 
-card_number = "7000792289606361"
-print(get_mask_card_number(card_number))
-
-print(mask_account_card(cart))
+# number_account = "19899891283123"
+# print(get_mask_account(number_account))
+# card_number = "Счет 64686473678894779589"
+# print(get_mask_card_number(card_number))
+# print(mask_account_card(cart))
