@@ -1,0 +1,10 @@
+.idea/
+/workspace.xml
+.idea/replstate.xml
+.pyc
+.venv
+venv/
+venv
+.log
+*.log
+!debug.log
