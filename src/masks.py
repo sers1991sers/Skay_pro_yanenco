@@ -66,7 +66,7 @@ def mask_account_card(check: str) -> str:
 
     return result
 
-
+#доделать
 
 # number_account = "19899891283123"
 # print(get_mask_account(number_account))
